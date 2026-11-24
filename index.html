@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NOCTURNE // СКАЧАТЬ</title>
+  <link rel="icon" href="icon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080808;
+      --paper: #f2efe6;
+      --ink: #080808;
+      --red: #ff243f;
+      --muted: #8b8b93;
+      --line: #2b2b2b;
+      --mx: 50%;
+      --my: 50%;
+      --head: 'Anton', Impact, sans-serif;
+      --title-font: 'Bebas Neue', Impact, sans-serif;
+      --mono: 'Space Mono', Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    a { color: inherit; text-decoration: none; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      position: relative;
+      background: var(--bg);
+      color: var(--paper);
+      font-family: var(--mono);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9;
+      pointer-events: none;
+      opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      mix-blend-mode: screen;
+    }
+
+    .ascii-field {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      color: #8a1626;
+      white-space: pre;
+      font: 10px/9px Consolas, 'Courier New', monospace;
+      letter-spacing: 1px;
+      opacity: .28;
+    }
+    .ascii-field.glow {
+      color: var(--red);
+      opacity: .45;
+      mix-blend-mode: screen;
+      -webkit-mask-image: radial-gradient(circle 210px at var(--mx) var(--my), #000 0%, rgba(0,0,0,.4) 45%, transparent 78%);
+      mask-image: radial-gradient(circle 210px at var(--mx) var(--my), #000 0%, rgba(0,0,0,.4) 45%, transparent 78%);
+    }
+    .ascii-item { position: absolute; transform-origin: center center; }
+    .ascii-item pre { margin: 0; }
+
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--head);
+      font-size: 20px;
+      letter-spacing: .04em;
+    }
+    .brand .cross { color: var(--red); font-size: 24px; line-height: 1; }
+    .brand .slash { color: var(--red); margin: 0 3px; }
+    .top .meta { color: var(--muted); font-size: 9px; letter-spacing: .18em; }
+    .top-right { display: flex; align-items: center; gap: 18px; }
+    .contact-btn {
+      background: transparent;
+      border: 1px solid #5a1622;
+      color: #c9c9cf;
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      cursor: pointer;
+      transition: border-color .15s, color .15s, background .15s;
+    }
+    .contact-btn:hover { border-color: var(--red); color: #fff; background: #170609; }
+
+    .hero { padding: 58px 0 34px; position: relative; }
+    .hero-label {
+      position: absolute;
+      right: 0;
+      top: 46%;
+      transform: rotate(90deg) translateX(50%);
+      transform-origin: 100% 50%;
+      color: #6d1b28;
+      font-size: 9px;
+      letter-spacing: .3em;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .kicker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--red);
+      font-size: 10px;
+      letter-spacing: .24em;
+      margin-bottom: 20px;
+    }
+    .kicker::after { content: ''; width: 90px; height: 1px; background: var(--red); }
+    .ru-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid #5a1622;
+      background: #170609;
+      padding: 7px 11px;
+      margin: -6px 0 18px;
+      color: #c9c9cf;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .14em;
+    }
+    .ru-badge b { color: var(--red); }
+
+    .title {
+      font-family: var(--title-font);
+      font-size: clamp(86px, 15vw, 210px);
+      line-height: .9;
+      letter-spacing: .02em;
+      margin: 0;
+      text-transform: uppercase;
+      color: var(--paper);
+    }
+    .title span { color: inherit; }
+
+    .hero-main {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 60px;
+      align-items: start;
+      margin-top: 40px;
+    }
+    .statement {
+      font-family: var(--head);
+      font-size: clamp(30px, 4vw, 56px);
+      line-height: 1;
+      margin: 0;
+      text-transform: uppercase;
+    }
+    .statement em { font-style: normal; color: var(--red); }
+    .sub {
+      max-width: 560px;
+      margin: 20px 0 0;
+      color: #a0a0a8;
+      font-size: 11px;
+      line-height: 1.9;
+      letter-spacing: .02em;
+    }
+    .sub b { color: var(--paper); }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 26px;
+      min-width: 246px;
+      padding: 14px 18px;
+      border: 2px solid var(--red);
+      background: var(--red);
+      color: #080808;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: .12em;
+      transition: transform .15s, box-shadow .15s, background .15s, color .15s, border-color .15s;
+    }
+    .btn b {
+      font-family: var(--head);
+      font-size: 15px;
+      letter-spacing: .04em;
+      border-left: 1px solid rgba(0,0,0,.3);
+      padding-left: 12px;
+    }
+    .btn:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--paper); }
+    .btn.ghost { background: transparent; color: var(--paper); border-color: #4a4a4a; }
+    .btn.ghost b { border-color: #4a4a4a; color: var(--red); }
+    .btn.ghost:hover { border-color: var(--red); box-shadow: 5px 5px 0 var(--red); }
+
+    .poster {
+      position: relative;
+      border: 2px solid var(--paper);
+      padding: 14px;
+      background: #0c0c0c;
+      box-shadow: 9px 9px 0 var(--red);
+    }
+    .poster::before {
+      content: 'SIGNAL / 001';
+      position: absolute;
+      left: -2px;
+      top: -26px;
+      background: var(--paper);
+      color: var(--ink);
+      padding: 5px 9px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .14em;
+    }
+    .poster::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      pointer-events: none;
+      background:
+        linear-gradient(var(--red), var(--red)) left top / 14px 2px no-repeat,
+        linear-gradient(var(--red), var(--red)) left top / 2px 14px no-repeat,
+        linear-gradient(var(--red), var(--red)) right top / 14px 2px no-repeat,
+        linear-gradient(var(--red), var(--red)) right top / 2px 14px no-repeat,
+        linear-gradient(var(--red), var(--red)) left bottom / 14px 2px no-repeat,
+        linear-gradient(var(--red), var(--red)) left bottom / 2px 14px no-repeat,
+        linear-gradient(var(--red), var(--red)) right bottom / 14px 2px no-repeat,
+        linear-gradient(var(--red), var(--red)) right bottom / 2px 14px no-repeat;
+    }
+    .poster pre {
+      margin: 0;
+      font: 11px/10px Consolas, 'Courier New', monospace;
+      letter-spacing: 1px;
+      color: var(--paper);
+      white-space: pre;
+    }
+    .poster .pupil { color: var(--red); font-weight: 700; }
+    .poster .cap {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #444;
+      margin-top: 12px;
+      padding-top: 8px;
+      font-size: 8px;
+      letter-spacing: .16em;
+      color: var(--muted);
+    }
+    .downloads { padding: 48px 0 26px; }
+    .sec-head {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 14px;
+      margin-bottom: 26px;
+    }
+    .sec-head::before {
+      content: '';
+      align-self: center;
+      width: 10px;
+      height: 10px;
+      background: var(--red);
+      flex: 0 0 auto;
+    }
+    .sec-head h2 { font-family: var(--head); font-size: 42px; margin: 0; letter-spacing: .02em; }
+    .sec-head span { color: var(--red); font-size: 10px; letter-spacing: .2em; }
+    .sec-head small { margin-left: auto; color: var(--muted); font-size: 9px; letter-spacing: .14em; }
+
+    .dl-console { border: 1px solid #333; background: #070707; }
+    .console-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 18px;
+      border-bottom: 1px solid #222;
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: .16em;
+    }
+    .console-bar b { color: var(--red); font-weight: 400; }
+    .console-bar span { color: #666; }
+    .dl-line {
+      display: grid;
+      color: var(--paper);
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      padding: 26px 22px;
+      border-bottom: 1px solid #222;
+      transition: background .15s, box-shadow .15s;
+    }
+    .dl-line:last-child { border-bottom: 0; }
+    .dl-line:hover { background: rgba(255,255,255,.04); box-shadow: inset 3px 0 0 var(--red); }
+    .line-tag { color: var(--red); font-size: 9px; font-weight: 700; letter-spacing: .16em; margin-bottom: 9px; }
+    .dl-line h3 { font-family: var(--head); font-size: clamp(40px, 5vw, 64px); line-height: .9; margin: 0 0 10px; letter-spacing: .02em; }
+    .dl-line p { margin: 0; max-width: 560px; color: var(--muted); font-size: 10px; line-height: 1.7; }
+    .line-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      border: 1px solid #666;
+      background: transparent;
+      color: #fff;
+      padding: 13px 18px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .line-btn b { font-family: var(--head); font-size: 18px; line-height: 1; }
+    .dl-line:hover .line-btn { border-color: #fff; }
+    .line-btn:hover { background: #fff; color: #000; border-color: #fff; }
+
+    .marquee {
+      position: relative;
+      z-index: 1;
+      background: #170609;
+      color: #a32035;
+      border-top: 1px solid #3a0c14;
+      border-bottom: 1px solid #3a0c14;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 10px 0 9px;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .22em;
+    }
+    .marquee div { display: inline-block; animation: slide 22s linear infinite; }
+    @keyframes slide { to { transform: translateX(-50%); } }
+
+    .manifest { padding: 60px 0 40px; }
+    .manifest h2 {
+      font-family: var(--head);
+      font-size: clamp(40px, 6vw, 76px);
+      line-height: .92;
+      margin: 0 0 28px;
+      text-transform: uppercase;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 60px 1fr 1.2fr;
+      gap: 20px;
+      align-items: start;
+      border-top: 1px solid var(--line);
+      padding: 20px 0;
+    }
+    .row:last-child { border-bottom: 1px solid var(--line); }
+    .row b { font-family: var(--head); font-size: 28px; color: var(--red); line-height: 1; }
+    .row h4 { font-family: var(--head); font-size: 22px; margin: 0; letter-spacing: .02em; }
+    .row p { margin: 0; color: #93939b; font-size: 10px; line-height: 1.8; }
+
+    .bottom {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: end;
+      border-top: 1px solid var(--line);
+      padding: 40px 0 70px;
+    }
+    .bottom .big {
+      font-family: var(--head);
+      font-size: clamp(42px, 7vw, 88px);
+      line-height: .84;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--paper);
+    }
+    .bottom .fine { color: #6f6f78; font-size: 9px; line-height: 2; letter-spacing: .12em; text-align: right; }
+    .bottom .fine b { color: var(--red); }
+
+    .toast {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 20;
+      background: var(--paper);
+      color: var(--ink);
+      border: 2px solid var(--red);
+      box-shadow: 5px 5px 0 var(--red);
+      padding: 12px 15px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      transform: translateY(18px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .16s, transform .16s;
+    }
+    .toast.show { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      .hero-main { grid-template-columns: 1fr; gap: 48px; }
+      .poster { width: 320px; margin-left: auto; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 18px; }
+      .top .meta { display: none; }
+      .hero-label { display: none; }
+      .title { font-size: 74px; }
+      .poster { width: 100%; }
+      .actions { flex-direction: column; }
+      .btn { width: 100%; }
+      .sec-head { flex-wrap: wrap; gap: 10px; }
+      .sec-head small { margin-left: 0; width: 100%; }
+      .dl-line { grid-template-columns: 1fr; gap: 18px; }
+      .dl-line h3 { font-size: 46px; }
+      .line-btn { width: 100%; justify-content: space-between; }
+      .row { grid-template-columns: 42px 1fr; gap: 12px; }
+      .row p { grid-column: 2; }
+      .bottom { grid-template-columns: 1fr; }
+      .bottom .fine { text-align: left; }
+      .marquee { font-size: 9px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ascii-field" id="asciiBase" aria-hidden="true"></div>
+  <div class="ascii-field glow" id="asciiGlow" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="top">
+      <div class="brand"><span class="cross">✝</span> NOCTURNE <span class="slash">//</span> СКАЧАТЬ</div>
+      <div class="top-right">
+        <div class="meta">НОЧЬ / ТОМ 04</div>
+        <button class="contact-btn" id="contactBtn" type="button">КОНТАКТ // kaznenii</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-label" aria-hidden="true">SIGNAL // 001 — NO SLEEP</div>
+      <div class="kicker">ТОЛЬКО ДЛЯ СВОИХ</div>
+      <div class="ru-badge">ЗАМЕНА SOUNDCLOUD В РФ <b>//</b> РАБОТАЕТ В РОССИИ</div>
+      <h1 class="title">NOCT<span>URNE</span></h1>
+
+      <div class="hero-main">
+        <div>
+          <p class="statement">ЗАХОДИ.<br>СКАЧИВАЙ.<br><em>СЛУШАЙ НОЧЬ.</em></p>
+          <p class="sub">
+            СВОЯ ПРОГРАММА ДЛЯ МУЗЫКИ. <b>БЕЗ ВКЛАДОК, БЕЗ РЕКЛАМЫ, БЕЗ ЛИШНЕГО.</b>
+            РЕКОМЕНДАЦИИ ПО ТВОИМ ЛАЙКАМ, ТЕКСТЫ ПЕСЕН, ПЛЕЙЛИСТЫ И ТЁМНЫЙ ИНТЕРФЕЙС.
+            ВСЁ В ОДНОМ ОКНЕ. НА КОМПЬЮТЕРЕ И В КАРМАНЕ.
+          </p>
+          <div class="actions">
+            <a class="btn" href="https://github.com/pawngoncreator-cloud/NOCTURNE/releases/download/v1.0.0/NOCTURNE.exe" download data-file="NOCTURNE.exe"><span>СКАЧАТЬ ДЛЯ WINDOWS</span><b>.EXE</b></a>
+            <a class="btn ghost" href="NOCTURNE.apk" download data-file="NOCTURNE.apk"><span>СКАЧАТЬ ДЛЯ ANDROID</span><b>.APK</b></a>
+          </div>
+        </div>
+
+        <div class="poster" aria-hidden="true">
+          <pre>             .-'~~~~~~~~~~~~~~~'-.
+          .-'   .-----------.   '-.
+       .-'    .'  .-''''-.  '.    '-.
+     .'      /   /  .--.  \   \      '.
+    /       |   |  /    \  |   |       \
+   |        |   | |  <span class="pupil">(o)</span>  | |   |        |
+   |        |   |  \    /  |   |        |
+    \       |   |   '--'   |   |       /
+     '.      \   \        /   /      .'
+       '-.    '.  '-....-'  .'    .-'
+          '-.   '--------'   .-'
+             '-.__________.-'</pre>
+          <div class="cap"><span>NO SLEEP</span><span>00:00</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="downloads" id="download">
+      <div class="sec-head">
+        <h2>СКАЧАТЬ</h2>
+        <span>// ДВА ВХОДА</span>
+      </div>
+
+      <div class="dl-console">
+        <div class="console-bar"><b>nocturne://download</b><span>2 FILES / READY</span></div>
+
+        <a class="dl-line" href="https://github.com/pawngoncreator-cloud/NOCTURNE/releases/download/v1.0.0/NOCTURNE.exe" download data-file="NOCTURNE.exe">
+          <div>
+            <div class="line-tag">01 // ПК · PORTABLE</div>
+            <h3>WINDOWS</h3>
+            <p>ОТДЕЛЬНОЕ ОКНО. НЕТ МЕНЮ. НЕТ БРАУЗЕРА.</p>
+          </div>
+          <span class="line-btn">СКАЧАТЬ EXE <b>↓</b></span>
+        </a>
+
+        <a class="dl-line" href="NOCTURNE.apk" download data-file="NOCTURNE.apk">
+          <div>
+            <div class="line-tag">02 // ТЕЛЕФОН · APK</div>
+            <h3>ANDROID</h3>
+            <p>ТА ЖЕ БАЗА. ТЕ ЖЕ ТЕКСТЫ. В КАРМАНЕ.</p>
+          </div>
+          <span class="line-btn">СКАЧАТЬ APK <b>↓</b></span>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div>NOCTURNE // ПЛЕЕР ВКЛЮЧЁН // СЛУШАЙ НОЧЬ // NOCTURNE // ПЛЕЕР ВКЛЮЧЁН // СЛУШАЙ НОЧЬ // NOCTURNE // ПЛЕЕР ВКЛЮЧЁН // СЛУШАЙ НОЧЬ //</div>
+  </div>
+
+  <div class="wrap">
+    <section class="manifest">
+      <h2>ЧТО ТАМ<br>ВНУТРИ</h2>
+      <div class="row"><b>01</b><h4>РЕКОМЕНДАЦИИ</h4><p>Подборка по лайкам, истории прослушивания, похожим пользователям и артисту из названия трека. Никакой популярной ерунды.</p></div>
+      <div class="row"><b>02</b><h4>ТЕКСТЫ ПЕСЕН</h4><p>Ищутся по исполнителю и названию из самого трека, а не по имени залившего. Строки подсвечиваются, когда играет.</p></div>
+      <div class="row"><b>03</b><h4>ПЛЕЙЛИСТЫ И СЕТЫ</h4><p>Находишь подборку, открываешь треки внутри и запускаешь всю цепочку. Не надо копировать ссылки руками.</p></div>
+      <div class="row"><b>04</b><h4>СВОЙ ПРОФИЛЬ</h4><p>Лайки, история, время прослушивания, достижения и темы. Всё сохраняется и подтягивается при следующем входе.</p></div>
+    </section>
+
+    <div class="bottom">
+      <div class="big">NOCTURNE<br>EST. 2026</div>
+      <div class="fine">
+        <b>ДЛЯ ТЕХ, КТО СЛУШАЕТ НОЧЬЮ.</b><br>
+        EXE + APK // ОДНА ВСЕЛЕННАЯ<br>
+        ЕСЛИ НЕ ЗАЙДЁТ — НЕ НАШИ ПРОБЛЕМЫ.
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    (function () {
+      var shapes = [
+        [
+          "             .-'~~~~~~~~~~~~~~~'-.",
+          "          .-'   .-----------.   '-.",
+          "       .-'    .'  .-''''-.  '.    '-.",
+          "     .'      /   /  .--.  \\   \\      '.",
+          "    /       |   |  /    \\  |   |       \\",
+          "   |        |   | |  (o)  | |   |        |",
+          "   |        |   |  \\    /  |   |        |",
+          "    \\       |   |   '--'   |   |       /",
+          "     '.      \\   \\        /   /      .'",
+          "       '-.    '.  '-....-'  .'    .-'",
+          "          '-.   '--------'   .-'",
+          "             '-.__________.-'"
+        ],
+        [
+          "      \\  |  /",
+          "       \\ | /",
+          "    ---- + ----",
+          "       / | \\",
+          "      /  |  \\"
+        ],
+        [
+          "  |   ||  ||||   ||  | ||||",
+          "--++---++---++---++---++---++--",
+          "  |   ||  ||||   ||  | ||||"
+        ],
+        [
+          "     .-~~~-.",
+          "   .'       '.",
+          "  /   .---.   \\",
+          " |   /     \\   |",
+          "  \\  '-...-'  /",
+          "   '.       .'",
+          "     '-___-'"
+        ],
+        [
+          " .----------------------.",
+          " |  o  ============  o  |",
+          " |     |          |     |",
+          " |     |  ......  |     |",
+          " |_____|__________|_____|"
+        ],
+        [
+          "   *      +    .",
+          "       .     *",
+          "   +      *      .",
+          "      .       +"
+        ]
+      ];
+      var spots = [
+        { shape: 0, top: '16%', left: '50%', scale: 1.7 },
+        { shape: 1, top: '4%', left: '84%', scale: 1.05 },
+        { shape: 2, top: '9%', left: '14%', scale: 1.0 },
+        { shape: 5, top: '27%', left: '78%', scale: 1.1 },
+        { shape: 3, top: '34%', left: '20%', scale: 1.0 },
+        { shape: 2, top: '44%', left: '88%', scale: .9 },
+        { shape: 1, top: '51%', left: '12%', scale: 1.1 },
+        { shape: 4, top: '58%', left: '68%', scale: 1.0 },
+        { shape: 5, top: '67%', left: '30%', scale: 1.2 },
+        { shape: 3, top: '75%', left: '86%', scale: .9 },
+        { shape: 2, top: '85%', left: '16%', scale: 1.0 },
+        { shape: 0, top: '95%', left: '58%', scale: 1.0 }
+      ];
+
+      function fill(id) {
+        var field = document.getElementById(id);
+        spots.forEach(function (s) {
+          var box = document.createElement('div');
+          box.className = 'ascii-item';
+          box.style.left = s.left;
+          box.style.top = s.top;
+          box.style.transform = 'translate(-50%, -50%) scale(' + s.scale + ')';
+          var pre = document.createElement('pre');
+          var art = shapes[s.shape];
+          pre.textContent = art.join('\n');
+          box.appendChild(pre);
+          field.appendChild(box);
+        });
+      }
+      fill('asciiBase');
+      fill('asciiGlow');
+
+      var px = window.innerWidth / 2;
+      var py = window.innerHeight / 2;
+      function paint() {
+        document.documentElement.style.setProperty('--mx', (px + window.scrollX) + 'px');
+        document.documentElement.style.setProperty('--my', (py + window.scrollY) + 'px');
+      }
+      document.addEventListener('pointermove', function (e) {
+        px = e.clientX;
+        py = e.clientY;
+        paint();
+      }, { passive: true });
+      window.addEventListener('scroll', paint, { passive: true });
+      paint();
+
+      var toast = document.getElementById('toast');
+      function showToast(text) {
+        toast.textContent = text;
+        toast.classList.add('show');
+        setTimeout(function () { toast.classList.remove('show'); }, 2400);
+      }
+      document.querySelectorAll('[download]').forEach(function (a) {
+        a.addEventListener('click', function () {
+          showToast('> ЗАГРУЗКА: ' + a.getAttribute('data-file'));
+        });
+      });
+
+      document.getElementById('contactBtn').addEventListener('click', function () {
+        var nick = 'kaznenii';
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(nick).catch(function () {});
+        }
+        showToast('> ДИСКОРД: ' + nick + ' // СКОПИРОВАН');
+      });
+    })();
+  </script>
+</body>
+</html>
